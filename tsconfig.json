@@ -27,9 +27,9 @@
       "@utils/*": ["utils/*"],
       "@interfaces/*": ["interfaces/*"],
       "@hooks/*": ["hooks/*"],
-      "@services/*": ["services/*"],
+      "@services/*": ["services/*"]
     }
   },
-  "include": ["src", "tailwind.config.js"],
+  "include": ["src", "tailwind.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

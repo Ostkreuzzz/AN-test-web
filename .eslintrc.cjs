@@ -13,6 +13,7 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
+    parser: '@typescript-eslint/parser',
     ecmaVersion: 'latest',
     sourceType: 'module',
     project: ['./tsconfig.json', './tsconfig.node.json'],
@@ -29,5 +30,9 @@ module.exports = {
     'react/button-has-type': 'off',
     'react/jsx-no-bind': 'off',
     'react/function-component-definition': 'off',
+    '@typescript-eslint/no-floating-promises': 'off',
+    'no-nested-ternary': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
+    // '@typescript-eslint/no-unsafe-assignment': 'off',
   },
 };

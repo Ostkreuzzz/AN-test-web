@@ -1,3 +1,115 @@
+@import 'normalize.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Manrope';
+  src: url('/assets/fonts/Manrope-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+body {
+  min-height: 100vh;
+  color: '#151515';
+  background: #e6e6e6;
+  line-height: 25px;
+
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 58px;
+  letter-spacing: 2px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+h2 {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 44px;
+  letter-spacing: 1.4px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+h3 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 36px;
+  letter-spacing: 1.15px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+h4 {
+  font-family: Manrope;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 38.25px;
+  letter-spacing: 2px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+h5 {
+  font-family: Manrope;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32.78px;
+  letter-spacing: 1.7;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+h6 {
+  font-family: Manrope;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24.59px;
+  letter-spacing: 1.3px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+}
+
+/* .btn {
+  @apply h-48 w-[160px] text-[13px] font-bold uppercase tracking-[1px];
+}
+
+.btn-primary {
+  @apply bg-orange hover:bg-orange-soft text-white;
+}
+
+.btn-secondary {
+  @apply border-[1px] border-black text-black hover:bg-black hover:text-white;
+}
+
+.btn-small {
+  @apply after:text-orange hover:text-orange relative text-[13px] font-bold uppercase tracking-[1px] text-black opacity-50 after:absolute after:-right-16 after:top-1/2 after:-translate-y-1/2 after:text-xl after:font-extrabold after:content-['>'];
+} */
