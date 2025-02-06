@@ -1,46 +1,57 @@
 import FlightCard from '@components/FlightCard';
 import { Flight } from '@interfaces/Flight';
 import { getAllFlights } from 'api/fligts';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Alert, Snackbar } from '@mui/material';
 import LoadingCircular from '@components/LoadingCircle';
 import PaginationControlled from '@components/PaginationControlled';
 import Navigation from '@components/Navigation';
 import Selector from '@components/Selector';
 import Search from '@components/Search';
-import CustomizedSlider from '@components/Slider';
+// import RangeSlider from '@components/Slider';
+import { getAllNames } from 'handlers/handleNamesForSelectors';
+import { getFilteredData } from 'handlers/filterData';
+import { getPaginationRange } from 'handlers/paginationRange';
 
 function App() {
   const [data, setData] = useState<Flight[]>([]);
+  const [visibleData, setVisibleData] = useState<Flight[]>([]);
 
   const [query, setQuery] = useState('');
   const [airline, setAirline] = useState('');
   const [terminal, setTerminal] = useState('');
-  const [price, setPrice] = useState({ min: 30, max: 300 });
+  // const [priceRange, setPriceRange] = useState([0, 1000]);
   // const [date, setDate] = useState({ start: '', end: '' });
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState({
+  const [message, setMessage] = useState({
     type: '',
-    isError: false,
+    isMessage: false,
   });
 
-  const statusesTypes = ['Alive', 'Dead', 'unknown'];
-  const gendersTypes = ['Male', 'Female', 'unknown'];
+  const airlines = getAllNames(data, 'airline');
+  const terminals = getAllNames(data, 'terminal');
+  const sortedData = getFilteredData({ data, query, airline, terminal });
+  const itemsPerPage = 15;
 
-  async function fetchAllFlights() {
+  const fetchAllFlights = useCallback(async () => {
     setIsLoading(true);
     const res = await getAllFlights();
     setData(res);
+
     setIsLoading(false);
-  }
+  }, []);
+
+  useEffect(() => {
+    setVisibleData(getPaginationRange(sortedData, page, itemsPerPage));
+  }, [page, sortedData]);
 
   useEffect(() => {
     fetchAllFlights();
-  }, []);
+  }, [fetchAllFlights]);
 
   return (
-    <body>
+    <div>
       <div
         className=' flex flex-col items-center justify-between gap-24
             desktop:flex-row desktop:items-start  desktop:justify-start desktop:gap-0 desktop:py-32'
@@ -50,48 +61,48 @@ function App() {
         </div>
 
         <div className='flex w-full flex-col gap-40 px-16 desktop:px-32 desktop:pt-18'>
-          {error.isError && (
+          {message.isMessage && (
             <Snackbar
-              open={error.isError}
+              open={message.isMessage}
               autoHideDuration={3000}
               onClose={() =>
-                setError({
+                setMessage({
                   type: '',
-                  isError: false,
+                  isMessage: false,
                 })
               }
               anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             >
               <Alert
                 onClose={() =>
-                  setError({
+                  setMessage({
                     type: '',
-                    isError: true,
+                    isMessage: false,
                   })
                 }
                 severity='error'
                 sx={{ width: '100%' }}
               >
-                {error.type}
+                {message.type}
               </Alert>
             </Snackbar>
           )}
-          <div className='flex flex-col items-start justify-between gap-32 desktop:flex-row desktop:items-center'>
+          <main className='flex flex-col items-start justify-between gap-32 desktop:flex-row desktop:items-center'>
             <Search query={query} setQuery={setQuery} />
-            <CustomizedSlider maxValue={300} minValue={30} />
+            {/* <RangeSlider value={priceRange} setValue={setPriceRange} /> */}
             <div className='flex w-full gap-16'>
-              <Selector title='Airline' value={airline} setValue={setAirline} items={gendersTypes} />
-              <Selector title='Terminal' value={terminal} setValue={setTerminal} items={statusesTypes} />
+              <Selector title='Airline' value={airline} setValue={setAirline} items={airlines} />
+              <Selector title='Terminal' value={terminal} setValue={setTerminal} items={terminals} />
             </div>
-          </div>
+          </main>
           {isLoading ? (
             <LoadingCircular />
-          ) : data.length > 0 ? (
-            <div
+          ) : visibleData.length > 0 ? (
+            <main
               className='mx-auto my-0 grid grid-cols-1 gap-18 tablet:grid-cols-2 tablet-large:grid-cols-3 
       desktop:grid-cols-4 desktop-fullscreen:grid-cols-5 desktop-fullscreen:gap-12'
             >
-              {data.map((flightData) => (
+              {visibleData.map((flightData) => (
                 <FlightCard
                   price={flightData.price}
                   airline={flightData.airline}
@@ -106,21 +117,25 @@ function App() {
                   key={flightData.id}
                 />
               ))}
-            </div>
+            </main>
           ) : (
-            <p className='text-gray text-center text-xl'>
+            <p className='text-center  text-xl text-black'>
               No suitable data found. Please adjust your filters or search query.
             </p>
           )}
 
-          {data.length > 0 && (
+          {sortedData.length > itemsPerPage && (
             <div className='flex justify-center'>
-              <PaginationControlled amount={data.length} page={page} setPage={setPage} />
+              <PaginationControlled
+                amount={Math.ceil(sortedData.length / itemsPerPage)}
+                page={page}
+                setPage={setPage}
+              />
             </div>
           )}
         </div>
       </div>
-    </body>
+    </div>
   );
 }
 

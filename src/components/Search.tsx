@@ -11,25 +11,13 @@ export default function Search({ query, setQuery }: Props) {
     <Box sx={{ width: 500, maxWidth: '100%' }}>
       <TextField
         fullWidth
-        label='Search'
+        label='Search by code'
         id='Search'
+        color='info'
         value={query}
-        className='text-black font-primary'
+        className='font-primary text-black'
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           setQuery(event.target.value.trimStart());
-        }}
-        sx={{
-          '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#151515 ',
-            transition: 'border-color 300ms ease',
-          },
-          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#151515 ',
-          },
-          color: '#151515 ',
-          '&.Mui-focused': {
-            color: '#151515 ',
-          },
         }}
       />
     </Box>

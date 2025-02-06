@@ -18,28 +18,8 @@ export default function Selector({ title, value, items, setValue }: Props) {
   };
 
   return (
-    <FormControl
-      className='text-black h-fit w-full font-primary'
-      sx={{
-        '& .MuiOutlinedInput-notchedOutline': {
-          borderColor: '#151515 ',
-          transition: 'border-color 300ms ease',
-        },
-        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-          borderColor: '#151515 ',
-        },
-      }}
-    >
-      <InputLabel
-        id='demo-simple-select-label'
-        className='font-primary text-xl'
-        sx={{
-          color: '#151515 ',
-          '&.Mui-focused': {
-            color: '#151515 ',
-          },
-        }}
-      >
+    <FormControl className='text-black h-fit w-full font-primary'>
+      <InputLabel id='demo-simple-select-label' className='font-primary text-xl'>
         {title}
       </InputLabel>
       <Select
@@ -47,13 +27,9 @@ export default function Selector({ title, value, items, setValue }: Props) {
         id='demo-simple-select'
         value={value}
         label={title}
+        color='info'
         onChange={handleChange}
         className='font-primary text-xl text-white '
-        sx={{
-          '& .MuiSelect-icon': {
-            color: '#151515 ',
-          },
-        }}
       >
         <MenuItem value={0}>All</MenuItem>
 

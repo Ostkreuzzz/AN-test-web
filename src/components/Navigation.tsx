@@ -2,13 +2,13 @@ import { ShoppingCart, Flight, Bookmark } from '@mui/icons-material';
 
 export default function Navigation() {
   return (
-    <div
-      className='flex h-56 w-lvw items-center justify-between gap-72 bg-white
+    <header
+      className='flex h-56 w-lvw items-center justify-between gap-64 bg-white
     px-24 shadow-xl desktop:h-90% desktop:w-96 
     desktop:flex-col desktop:justify-start desktop:rounded-xl desktop:py-32'
     >
       <Flight
-        className='text-red hover:scale-105'
+        className='hover:scale-105'
         sx={{
           width: '32px',
           height: '32px',
@@ -18,7 +18,8 @@ export default function Navigation() {
       <ul className='flex gap-24 desktop:flex-col desktop:gap-32'>
         <li>
           <ShoppingCart
-            className='hover:text-light-blue'
+            className='hover:scale-105'
+            color='info'
             sx={{
               width: '32px',
               height: '32px',
@@ -27,7 +28,8 @@ export default function Navigation() {
         </li>
         <li>
           <Bookmark
-            className='hover:text-light-blue'
+            className='hover:scale-105'
+            color='secondary'
             sx={{
               width: '32px',
               height: '32px',
@@ -35,6 +37,6 @@ export default function Navigation() {
           />
         </li>
       </ul>
-    </div>
+    </header>
   );
 }
