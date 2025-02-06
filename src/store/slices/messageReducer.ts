@@ -17,8 +17,6 @@ const messageSlice = createSlice({
       state.text = action.payload.text;
     },
     unsetMessage: (state) => {
-      state.type = 'success';
-      state.text = '';
       state.isMessage = false;
     },
   },

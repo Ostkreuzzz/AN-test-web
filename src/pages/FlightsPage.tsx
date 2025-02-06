@@ -60,7 +60,7 @@ function FlightsPage() {
   }, [fetchAllFlights]);
 
   return (
-    <div className='flex w-full flex-col gap-40 px-16 desktop:px-32 desktop:pt-18'>
+    <div className='flex w-full flex-col gap-32 px-16 desktop:px-32 desktop:pt-18'>
       <div className='flex flex-col items-start justify-between gap-32 desktop:flex-row desktop:items-center'>
         <Search query={query} setQuery={setQuery} />
         <div className='flex w-full gap-16'>

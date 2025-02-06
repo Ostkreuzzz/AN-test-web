@@ -3,6 +3,7 @@ import App from './App';
 import { NotFound } from './pages/NotFound';
 import FlightsPage from './pages/FlightsPage';
 import FlightDetailsPage from './pages/FlightDetailsPage';
+import BookmarksPage from 'pages/BookmarksPage';
 
 export const Root = () => (
   <Router>
@@ -11,9 +12,10 @@ export const Root = () => (
         <Route index element={<FlightsPage />} />
 
         <Route path='flights'>
-          <Route path=':flightId' element={<FlightDetailsPage />} />
+          <Route index path=':flightId' element={<FlightDetailsPage />} />
         </Route>
         <Route path='cart' element={<FlightDetailsPage />} />
+        <Route path='bookmarks' element={<BookmarksPage />} />
 
         <Route path='*' element={<NotFound />} />
       </Route>
