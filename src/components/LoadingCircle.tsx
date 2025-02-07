@@ -1,17 +1,10 @@
 import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
+import { Container } from '@mui/material';
 
 export default function LoadingCircular() {
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-      }}
-    >
+    <Container maxWidth='md' sx={{ textAlign: 'center', mt: 5 }}>
       <CircularProgress color='inherit' size='3rem' />
-    </Box>
+    </Container>
   );
 }

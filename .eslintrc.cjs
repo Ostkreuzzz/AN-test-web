@@ -21,7 +21,6 @@ module.exports = {
   plugins: ['react-refresh'],
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-    // Since react 17 we don't need to have React imported at the top
     'react/react-in-jsx-scope': 'off',
     'import/order': 'off',
     'import/prefer-default-export': 'off',
@@ -36,6 +35,7 @@ module.exports = {
     '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/no-unsafe-member-access': 'off',
     '@typescript-eslint/no-unsafe-return': 'off',
+    'react/no-array-index-key': 'off',
     'no-param-reassign': [
       'error',
       {

@@ -1,6 +1,4 @@
-# Vite + React + Typescript + Tanstack Query + Tailwind + Eslint + Prettier
-
-This is a starter template.
+# This a test task for Antonov
 
 To make this repository yours:
 
@@ -10,7 +8,11 @@ git add .
 git commit -m "Initial commit"
 ```
 
-The starter includes the following libraries:
+### Screenshot
+
+![](preview.png)
+
+Includes the following libraries:
 
 - `@tanstack/react-query`
 - `axios`
