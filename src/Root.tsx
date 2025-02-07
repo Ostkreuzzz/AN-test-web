@@ -14,7 +14,7 @@ export const Root = () => (
         <Route path='flights'>
           <Route index path=':flightId' element={<FlightDetailsPage />} />
         </Route>
-        <Route path='cart' element={<FlightDetailsPage />} />
+        <Route path='cart' element={<BookmarksPage />} />
         <Route path='bookmarks' element={<BookmarksPage />} />
 
         <Route path='*' element={<NotFound />} />

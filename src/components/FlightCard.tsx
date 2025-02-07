@@ -28,7 +28,7 @@ export default function FlightCard({
   id,
 }: Flight) {
   const dispatch = useDispatch();
-  const bookmarks = useSelector((state: RootState) => state.bookmarkStore.value as string[]);
+  const bookmarks = useSelector((state: RootState) => state.bookmarkStore.value);
 
   const isBookmarked = bookmarks.includes(id);
 

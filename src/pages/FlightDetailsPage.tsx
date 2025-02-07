@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useId } from 'react';
 import { useParams } from 'react-router-dom';
 import { Flight } from '@interfaces/Flight';
 import { Card, CardContent, Typography, Box, Container, Paper, Stack, Divider } from '@mui/material';
@@ -12,7 +12,9 @@ import ChairIcon from '@mui/icons-material/Chair';
 
 export default function FlightDetailsPage() {
   const dispatch = useDispatch();
+  const uniqueId = useId();
   const { flightId } = useParams();
+
   const [flight, setFlight] = useState<Flight | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [seats, setSeats] = useState<boolean[][]>([]);
@@ -139,11 +141,11 @@ export default function FlightDetailsPage() {
             Seating Plan
           </Typography>
           <Stack spacing={1} alignItems='center'>
-            {seats.map((row, rowIndex) => (
-              <Stack key={rowIndex} direction='row' spacing={1}>
-                {row.map((occupied, colIndex) => (
+            {seats.map((row) => (
+              <Stack key={uniqueId} direction='row' spacing={1}>
+                {row.map((occupied) => (
                   <Card
-                    key={colIndex}
+                    key={uniqueId}
                     sx={{
                       width: 50,
                       height: 50,

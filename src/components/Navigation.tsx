@@ -20,7 +20,7 @@ export default function Navigation() {
 
       <ul className='flex gap-24 desktop:flex-col desktop:gap-32'>
         <li>
-          <NavLink to='cart'>
+          <NavLink to='/cart'>
             <ShoppingCart
               className='hover:scale-105'
               color='info'
@@ -32,7 +32,7 @@ export default function Navigation() {
           </NavLink>
         </li>
         <li>
-          <NavLink to='bookmarks'>
+          <NavLink to='/bookmarks'>
             <Bookmark
               className='hover:scale-105'
               color='secondary'
