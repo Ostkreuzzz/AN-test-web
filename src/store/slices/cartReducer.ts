@@ -1,16 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { FlightSeat } from '@interfaces/Flight';
 
-const getInitialCart = (): string[] => {
+const getInitialCart = () => {
   const storedCartItems = localStorage.getItem('cartItems');
 
-  return storedCartItems ? (JSON.parse(storedCartItems) as string[]) : [];
+  return storedCartItems ? (JSON.parse(storedCartItems) as FlightSeat[]) : [];
 };
 
-interface CartState {
-  value: string[];
-}
-
-const initialState: CartState = {
+const initialState = {
   value: getInitialCart(),
 };
 
@@ -18,20 +15,24 @@ const cartSlice = createSlice({
   name: 'cartStore',
   initialState,
   reducers: {
-    add: (state, action) => {
-      state.value.push(action.payload);
+    addToCart: (state, action) => {
+      state.value.push(action.payload as FlightSeat);
       localStorage.setItem('cartItems', JSON.stringify(state.value));
     },
-    remove: (state, action) => {
-      state.value.splice(0, state.value.length, ...state.value.filter((item) => item !== action.payload));
+    removeFromCart: (state, action) => {
+      state.value.splice(
+        0,
+        state.value.length,
+        ...state.value.filter((item) => item.flightId !== action.payload.flightId),
+      );
       localStorage.setItem('cartItems', JSON.stringify(state.value));
     },
-    deleteAll: (state) => {
+    deleteAllCart: (state) => {
       state.value.splice(0, state.value.length);
       localStorage.removeItem('cartItems');
     },
   },
 });
 
-export const { add, remove, deleteAll } = cartSlice.actions;
+export const { addToCart, removeFromCart, deleteAllCart } = cartSlice.actions;
 export default cartSlice.reducer;

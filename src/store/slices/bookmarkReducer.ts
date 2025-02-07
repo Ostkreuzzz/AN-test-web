@@ -19,7 +19,7 @@ const bookmarkSlice = createSlice({
   initialState,
   reducers: {
     add: (state, action) => {
-      state.value.push(action.payload);
+      state.value.push(action.payload as string);
       localStorage.setItem('bookmarks', JSON.stringify(state.value));
     },
     remove: (state, action) => {

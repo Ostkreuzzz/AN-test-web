@@ -13,3 +13,9 @@ export interface Flight {
     remaining: number;
   };
 }
+
+export interface FlightSeat {
+  flightId: string;
+  amountOfTickets: number;
+  ticketsValue: number;
+}

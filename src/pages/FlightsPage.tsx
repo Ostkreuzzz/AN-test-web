@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import { Typography, Container } from '@mui/material';
+
 import { Flight } from '@interfaces/Flight';
 import { getAllFlights } from 'api/fligts';
 
@@ -59,6 +61,18 @@ function FlightsPage() {
     fetchAllFlights();
   }, [fetchAllFlights]);
 
+  if (isLoading) {
+    return <LoadingCircular />;
+  }
+
+  if (!visibleData.length) {
+    return (
+      <Container maxWidth='md' sx={{ textAlign: 'center', mt: 5 }}>
+        <Typography variant='h5'>No suitable data found. Please adjust your filters or search query.</Typography>
+      </Container>
+    );
+  }
+
   return (
     <div className='flex w-full flex-col gap-32 px-16 desktop:px-32 desktop:pt-18'>
       <div className='flex flex-col items-start justify-between gap-32 desktop:flex-row desktop:items-center'>
@@ -68,34 +82,27 @@ function FlightsPage() {
           <Selector title='Terminal' value={terminal} setValue={setTerminal} items={terminals} />
         </div>
       </div>
-      {isLoading ? (
-        <LoadingCircular />
-      ) : visibleData.length > 0 ? (
-        <div
-          className='mx-auto my-0 grid grid-cols-1 gap-18 tablet:grid-cols-2 tablet-large:grid-cols-3 
+
+      <div
+        className='mx-auto my-0 grid grid-cols-1 gap-18 tablet:grid-cols-2 tablet-large:grid-cols-3 
       desktop:grid-cols-4 desktop-fullscreen:grid-cols-5 desktop-fullscreen:gap-12'
-        >
-          {visibleData.map((flightData) => (
-            <FlightCard
-              price={flightData.price}
-              airline={flightData.airline}
-              from={flightData.from}
-              to={flightData.to}
-              departureTime={flightData.departureTime}
-              arrivalTime={flightData.arrivalTime}
-              terminal={flightData.terminal}
-              gate={flightData.gate}
-              tickets={flightData.tickets}
-              id={flightData.id}
-              key={flightData.id}
-            />
-          ))}
-        </div>
-      ) : (
-        <p className='text-center  text-xl text-black'>
-          No suitable data found. Please adjust your filters or search query.
-        </p>
-      )}
+      >
+        {visibleData.map((flightData) => (
+          <FlightCard
+            price={flightData.price}
+            airline={flightData.airline}
+            from={flightData.from}
+            to={flightData.to}
+            departureTime={flightData.departureTime}
+            arrivalTime={flightData.arrivalTime}
+            terminal={flightData.terminal}
+            gate={flightData.gate}
+            tickets={flightData.tickets}
+            id={flightData.id}
+            key={flightData.id}
+          />
+        ))}
+      </div>
 
       {sortedData.length > itemsPerPage && (
         <div className='flex justify-center'>

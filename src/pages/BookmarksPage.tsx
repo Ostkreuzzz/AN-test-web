@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import { Typography, Container } from '@mui/material';
+
 import { Flight } from '@interfaces/Flight';
 
 import LoadingCircular from '@components/LoadingCircle';
@@ -19,7 +21,7 @@ function BookmarksPage() {
 
   const dispatch = useDispatch();
 
-  const bookmarkIds = useSelector((state: RootState) => state.bookmarkStore.value as string[]);
+  const bookmarkIds = useSelector((state: RootState) => state.bookmarkStore.value);
 
   function handleClearAll() {
     dispatch(deleteAll());
@@ -47,6 +49,18 @@ function BookmarksPage() {
     fetchBookmarkedFlights();
   }, [fetchBookmarkedFlights]);
 
+  if (!bookmarkIds.length) {
+    return (
+      <Container maxWidth='md' sx={{ textAlign: 'center', mt: 5 }}>
+        <Typography variant='h5'>No bookmarks</Typography>
+      </Container>
+    );
+  }
+
+  if (isLoading) {
+    return <LoadingCircular />;
+  }
+
   return (
     <div className='flex w-full flex-col gap-32 px-16 desktop:px-32 desktop:pt-18'>
       {bookmarkIds.length > 0 && (
@@ -54,32 +68,27 @@ function BookmarksPage() {
           <BasicButton title='Clear All' handleClick={handleClearAll} isDisabled={!bookmarkIds.length} />
         </div>
       )}
-      {isLoading ? (
-        <LoadingCircular />
-      ) : data.length > 0 ? (
-        <div
-          className='mx-auto my-0 grid grid-cols-1 gap-18 tablet:grid-cols-2 tablet-large:grid-cols-3 
+
+      <div
+        className='mx-auto my-0 grid grid-cols-1 gap-18 tablet:grid-cols-2 tablet-large:grid-cols-3 
       desktop:grid-cols-4 desktop-fullscreen:grid-cols-5 desktop-fullscreen:gap-12'
-        >
-          {data.map((flightData) => (
-            <FlightCard
-              price={flightData.price}
-              airline={flightData.airline}
-              from={flightData.from}
-              to={flightData.to}
-              departureTime={flightData.departureTime}
-              arrivalTime={flightData.arrivalTime}
-              terminal={flightData.terminal}
-              gate={flightData.gate}
-              tickets={flightData.tickets}
-              id={flightData.id}
-              key={flightData.id}
-            />
-          ))}
-        </div>
-      ) : (
-        <p className='text-center  text-xl text-black'>No Bookmarks for now!</p>
-      )}
+      >
+        {data.map((flightData) => (
+          <FlightCard
+            price={flightData.price}
+            airline={flightData.airline}
+            from={flightData.from}
+            to={flightData.to}
+            departureTime={flightData.departureTime}
+            arrivalTime={flightData.arrivalTime}
+            terminal={flightData.terminal}
+            gate={flightData.gate}
+            tickets={flightData.tickets}
+            id={flightData.id}
+            key={flightData.id}
+          />
+        ))}
+      </div>
     </div>
   );
 }
