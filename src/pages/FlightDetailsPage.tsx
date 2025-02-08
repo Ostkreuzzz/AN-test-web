@@ -1,16 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Flight } from '@interfaces/Flight';
+
 import { Card, Typography, Box, Container, Paper, Stack, Divider, CardActionArea } from '@mui/material';
-import { FlightTakeoff, FlightLand, AirplaneTicket, Place } from '@mui/icons-material';
+import { FlightTakeoff, FlightLand, AirplaneTicket, Place, Chair } from '@mui/icons-material';
+import { Flight } from '@interfaces/Flight';
 import { getFlightById } from 'api/fligts';
-import { setMessage } from 'store/slices/messageReducer';
+
 import { useDispatch } from 'react-redux';
-import LoadingCircular from '@components/LoadingCircle';
-import { formatDateTime } from 'handlers/handleTimeFormat';
-import ChairIcon from '@mui/icons-material/Chair';
-import BasicButton from '@components/Button';
+import { setMessage } from 'store/slices/messageReducer';
 import { addToCart } from 'store/slices/cartReducer';
+
+import LoadingCircular from '@components/LoadingCircle';
+import BasicButton from '@components/Button';
+
+import { formatDateTime } from 'handlers/handleTimeFormat';
+import { generateSeats } from 'handlers/generateSeats';
 
 export default function FlightDetailsPage() {
   const dispatch = useDispatch();
@@ -57,14 +61,6 @@ export default function FlightDetailsPage() {
     setAmountOfTickets(0);
   }
 
-  const generateSeats = (rows: number, cols: number) => {
-    const newSeats = Array.from(
-      { length: rows },
-      () => Array.from({ length: cols }, () => Math.random() < 0.3), // 30% occupancy rate
-    );
-    setSeats(newSeats);
-  };
-
   useEffect(() => {
     const fetchFlight = async () => {
       try {
@@ -72,7 +68,7 @@ export default function FlightDetailsPage() {
         setFlight(response.data as Flight);
         price.current = response.data.price;
 
-        generateSeats(8, 6);
+        generateSeats(8, 6, setSeats);
       } catch (error) {
         dispatch(
           setMessage({
@@ -201,7 +197,7 @@ export default function FlightDetailsPage() {
                           boxShadow: 3,
                         }}
                       >
-                        <ChairIcon />
+                        <Chair />
                       </CardActionArea>
                     </Card>
                   ))}
