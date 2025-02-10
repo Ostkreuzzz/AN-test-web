@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 
 import { Typography, Container } from '@mui/material';
 
@@ -30,10 +30,18 @@ function FlightsPage() {
 
   const airlines = getAllNames(data, 'airline');
   const terminals = getAllNames(data, 'terminal');
-  const sortedData = getFilteredData({ data, query, airline, terminal });
+  const sortedData = useMemo(
+    () => getFilteredData({ data, query, airline, terminal }),
+    [data, query, airline, terminal],
+  );
   const itemsPerPage = 15;
 
   const dispatch = useDispatch();
+
+  const getPaginationRangeMemoized = useCallback(
+    () => getPaginationRange(sortedData, page, itemsPerPage),
+    [sortedData, page, itemsPerPage],
+  );
 
   const fetchAllFlights = useCallback(async () => {
     setIsLoading(true);
@@ -54,8 +62,8 @@ function FlightsPage() {
   }, [dispatch]);
 
   useEffect(() => {
-    setVisibleData(getPaginationRange(sortedData, page, itemsPerPage));
-  }, [page, sortedData]);
+    setVisibleData(getPaginationRangeMemoized());
+  }, [page, sortedData, getPaginationRangeMemoized]);
 
   useEffect(() => {
     fetchAllFlights();
